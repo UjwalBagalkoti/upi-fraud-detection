@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+instance/
+*.db
+backend/model/
+node_modules/
+dist/
+.env
+.DS_Store
