@@ -5,7 +5,7 @@ __pycache__/
 .pytest_cache/
 instance/
 *.db
-backend/model/
+# backend/model/  -- keep the trained model in git for Vercel (no build-time training step)
 node_modules/
 dist/
 .env

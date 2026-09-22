@@ -53,6 +53,21 @@ Set `FLASK_DEBUG=1` for Flask's debugger/auto-reload (off by default).
 | GET | `/api/stats` | Counts, blocked amount, model metrics |
 | POST | `/api/simulate` | `{"n": 20}` demo payments |
 
+## Deploy to Vercel
+
+The repo is set up to deploy as one Vercel project: the React build as static files, `backend/app.py`
+as a Python serverless function at `/api/*` (see `vercel.json`, `api/index.py`).
+
+1. Add a Postgres database — easiest is Vercel's Storage tab → Neon (free tier) — and copy the
+   `DATABASE_URL` it gives you.
+2. In the Vercel project → Settings → Environment Variables, add `DATABASE_URL` (and `VERCEL=1`
+   if it isn't set automatically).
+3. Import the GitHub repo in Vercel. It reads `vercel.json` and deploys both parts automatically.
+4. The committed `backend/model/model.joblib` ships as-is — there's no `python train.py` build
+   step on Vercel, so retrain locally and commit the file again if you change the model.
+
+SQLite only works when running locally; Vercel's filesystem doesn't persist between requests.
+
 ## Next steps
 
 - Replace `data_gen.py` with a real labelled dataset (e.g. PaySim-style) — keep the same columns or edit `features.py`.

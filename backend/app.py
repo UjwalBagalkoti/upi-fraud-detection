@@ -121,7 +121,11 @@ def score_and_save(t, created_at=None):
 
 def create_app(config=None):
     app = Flask(__name__)
-    db_url = os.getenv("DATABASE_URL", "sqlite:///upi_fraud.db")
+    db_url = os.getenv("DATABASE_URL")
+    if not db_url:
+        if os.getenv("VERCEL"):
+            raise RuntimeError("DATABASE_URL is required on Vercel (SQLite doesn't persist there). Add a Postgres integration and set the env var.")
+        db_url = "sqlite:///upi_fraud.db"
     if db_url.startswith("postgres://"):
         db_url = db_url.replace("postgres://", "postgresql://", 1)
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url

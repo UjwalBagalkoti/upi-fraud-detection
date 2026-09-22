@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || "";
+const BASE = import.meta.env.VITE_API_URL || ""; // "" = same-origin, correct for Vercel
 
 async function request(path, options = {}) {
   const res = await fetch(BASE + path, {
