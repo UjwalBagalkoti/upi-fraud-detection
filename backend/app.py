@@ -133,6 +133,21 @@ def create_app(config=None):
     with app.app_context():
         db.create_all()
 
+    @app.get("/")
+    def index():
+        return jsonify(
+            service="UPI Fraud Detection API",
+            status="online",
+            model=load_metrics() is not None,
+            health="/api/health",
+            endpoints={
+                "check_transaction": "POST /api/transactions/check",
+                "transactions": "GET /api/transactions",
+                "stats": "GET /api/stats",
+                "simulate": "POST /api/simulate",
+            },
+        )
+
     @app.get("/api/health")
     def health():
         return jsonify(status="ok", model=load_metrics() is not None)
