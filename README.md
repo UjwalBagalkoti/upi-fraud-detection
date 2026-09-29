@@ -5,6 +5,10 @@ Allow / Review / Block decision with human-readable reasons, and learns from ana
 
 **Stack:** Flask · scikit-learn · SQLAlchemy (SQLite, or PostgreSQL via `DATABASE_URL`) · React + Vite
 
+# Live Demo
+
+https://upi-fraud-detection-frontend.onrender.com/
+
 ## Run it
 
 ```bash
