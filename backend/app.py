@@ -42,7 +42,7 @@ class Transaction(db.Model):
     risk_score = db.Column(db.Float)
     decision = db.Column(db.String(10), index=True)
     reasons = db.Column(db.Text)
-    analyst_label = db.Column(db.String(10))  # "fraud" | "legit" | None
+    analyst_label = db.Column(db.String(10))
 
     def to_dict(self):
         d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -52,7 +52,6 @@ class Transaction(db.Model):
 
 
 def json_body():
-    """Request JSON as a dict; anything else (bad JSON, list, string) becomes {}."""
     data = request.get_json(silent=True)
     return data if isinstance(data, dict) else {}
 
@@ -62,7 +61,6 @@ def _as_bool(v):
 
 
 def parse_txn(d):
-    """Validate a request body. Returns (transaction dict, None) or (None, {field: message})."""
     errors = {}
 
     def num(key, lo, hi, default=None):
@@ -199,5 +197,7 @@ def create_app(config=None):
     return app
 
 
+app = create_app()
+
 if __name__ == "__main__":
-    create_app().run(port=int(os.getenv("PORT", 5000)), debug=os.getenv("FLASK_DEBUG") == "1")
+    app.run(port=int(os.getenv("PORT", 5000)), debug=os.getenv("FLASK_DEBUG") == "1")
